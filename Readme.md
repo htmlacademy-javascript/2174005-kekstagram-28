@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Елена Лисиченок](https://up.htmlacademy.ru/javascript/28/user/2174005).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Бабченко](https://up.htmlacademy.ru/profession/frontender/15/javascript/28/user/619357).
 
 ---
 
