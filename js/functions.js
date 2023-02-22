@@ -42,3 +42,13 @@ let getDigit = (string) => {
 /* Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами —
 и возвращает исходную строку, дополненную указанными символами до заданной длины. Символы добавляются в начало строки.
 Если исходная строка превышает заданную длину, она не должна обрезаться. Если «добивка» слишком длинная, она обрезается с конца. */
+
+function pad (string, width, padding) { 
+  while (width > string.length) {
+      if (width > string.length + padding.length) { 
+          padding = padding.slice(0, width - string.length);
+      } 
+      string = `${padding.slice(0, width - string.length)}${string}`;
+  }
+  return string;
+};
