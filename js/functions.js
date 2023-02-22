@@ -10,7 +10,7 @@ function isPalindrome (string) {
   string = string.toLowerCase().split(' ').join('');
   let stringReverse = '';
   for (let i = string.length - 1; i >= 0; --i) {
-      stringReverse += string[i];
+    stringReverse += string[i];
   }
   return string == stringReverse;
 }
@@ -32,7 +32,7 @@ function getNumber (string) {
 
 // 2. Решение с помощью регулярного выражения
 
-let getDigit = (string) => {
+const getDigit = (string) => {
   const digitRegExp = /\d/g;
   const stringDigit = string.toString().match(digitRegExp);
   return stringDigit ? parseInt(stringDigit.join('')) : NaN;
@@ -45,10 +45,11 @@ let getDigit = (string) => {
 
 function pad (string, width, padding) { 
   while (width > string.length) {
+    padding = padding.slice(0, width - string.length);
       if (width > string.length + padding.length) { 
-          padding = padding.slice(0, width - string.length);
+        padding;
       } 
-      string = `${padding.slice(0, width - string.length)}${string}`;
+    string = `${padding}${string}`;
   }
   return string;
 };
