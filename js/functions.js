@@ -1,8 +1,10 @@
 // Функция для проверки длины строки
 
-function validateString (string) {
-  return (string.length <= 20) ? true : false;
+function validateString (string, maxLength) {
+  return (string.length <= maxLength) ? true : false;
 }
+
+validateString('Хрюшка вышла погулять', 25);
 
 // Функция для проверки, является ли строка палиндромом
 
@@ -12,7 +14,7 @@ function isPalindrome (string) {
   for (let i = string.length - 1; i >= 0; --i) {
     stringReverse += string[i];
   }
-  return string == stringReverse;
+  return string === stringReverse;
 }
 
 // Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа
