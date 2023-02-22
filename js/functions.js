@@ -16,12 +16,28 @@ function isPalindrome (string) {
 }
 
 // Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа
+  // 1. Решение с помощью цикла
+
+let result = "";
+
+function getNumber (string) {
+  for (let i = 0; i < string.length; i++) {
+    if (string[i] == parseInt(string[i])) {
+      result += string[i];
+    }
+  }
+  parseInt(result);
+  return result;
+}
+
+// 2. Решение с помощью регулярного выражения
 
 let getDigit = (string) => {
   const digitRegExp = /\d/g;
   const stringDigit = string.toString().match(digitRegExp);
-  return stringDigit ? Number(stringDigit.join('')) : NaN;
+  return stringDigit ? parseInt(stringDigit.join('')) : NaN;
 };
+
 
 /* Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами —
 и возвращает исходную строку, дополненную указанными символами до заданной длины. Символы добавляются в начало строки.
