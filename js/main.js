@@ -47,7 +47,6 @@ const createRandomId = (min, max) => {
   return function () {
     let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= (max - min + 1)) {
-      console.error('Перебраны все числа из диапазона от ' + min + ' до ' + max);
       return null;
     }
     while (previousValues.includes(currentValue)) {
@@ -78,4 +77,4 @@ const createPhoto = () => ({
   comments: Array.from({ length: SIMILAR_COMMENT_COUNT }, createComment),
 });
 
-const similarPhotos = Array.from({ length: SIMILAR_PHOTO_COUNT }, createPhoto);
+const similarPhotos = Array.from({ length: SIMILAR_PHOTO_COUNT }, createPhoto); /* eslint no-unused-vars: "off" */
