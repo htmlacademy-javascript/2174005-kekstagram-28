@@ -41,6 +41,15 @@ const getRandomInteger = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+const createIdGenerator = () => {
+  let i = 0;
+
+  return function () {
+    i += 1;
+    return i;
+  };
+};
+
 const createRandomId = (min, max) => {
   const previousValues = [];
 
@@ -57,9 +66,9 @@ const createRandomId = (min, max) => {
   };
 };
 
-const generateCommentId = createRandomId(1, 1000);
-const generatePhotoId = createRandomId(1, 25);
-const generateImageId = createRandomId(1, 25);
+const generateCommentId = createIdGenerator();
+const generatePhotoId = createIdGenerator();
+const generateImageId = createIdGenerator();
 const generateLikesQuantity = createRandomId(15, 200);
 
 const createComment = () => ({
