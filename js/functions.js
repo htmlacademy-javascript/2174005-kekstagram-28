@@ -23,7 +23,7 @@ isPalindrome('Лёша на полке клопа нашёл ');
 const getNumber = (string) => {
   let result = '';
   for (let i = 0; i < string.length; i++) {
-    if (parseInt(string[i], 10) === Number(string[i])) {
+    if (isNaN(parseInt(string[i], 10)) === false) {
       result += string[i];
     }
   }
