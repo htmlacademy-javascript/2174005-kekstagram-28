@@ -16,4 +16,15 @@ const createIdGenerator = () => {
   };
 };
 
-export {getRandomInteger, getRandomArrayElement, createIdGenerator};
+const shuffleArray = (array) => {
+  let j, temp;
+  for (let i = array.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    temp = array[j];
+    array[j] = array[i];
+    array[i] = temp;
+  }
+  return array;
+};
+
+export {getRandomArrayElement, createIdGenerator, shuffleArray};
