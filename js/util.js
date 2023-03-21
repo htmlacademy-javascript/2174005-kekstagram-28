@@ -27,4 +27,17 @@ const shuffleArray = (array) => {
   return array;
 };
 
-export {getRandomArrayElement, createIdGenerator, shuffleArray};
+const createRandomId = (array) => {
+  let i = 0;
+  let arrayCount = array.length - 1;
+return function () {
+  if (i == arrayCount) {
+    i = 0;
+  } else {
+      i += 1;
+    }
+    return array[i];
+  }
+};
+
+export {getRandomArrayElement, createIdGenerator, shuffleArray, createRandomId};
