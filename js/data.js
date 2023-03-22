@@ -1,4 +1,4 @@
-import {getRandomArrayElement, createIdGenerator, shuffleArray} from './util.js';
+import {getRandomArrayElement, createIdGenerator, shuffleArray, createRandomId} from './util.js';
 
 const DESCRIPTIONS = [
   'Лучшее фото в моей жизни!',
@@ -33,23 +33,23 @@ const NAMES = [
 
 const SIMILAR_PHOTO_COUNT = 25;
 const SIMILAR_COMMENT_COUNT = 3;
+const MIN_LIKE = 15;
+const MAX_LIKE = 200;
+const MIN_AVATAR = 1;
+const MAX_AVATAR = 6;
 
-
-const createRandomId = (min, max) => {
-  const idValues = Array.from({length: max - min + 1}, (_, index) => index + min);
-  for (let i = 0; i < idValues.length; i++) {
-    shuffleArray(idValues);
-    return idValues[i];
-  }
-};
+const likeValues = shuffleArray(Array.from({length: MAX_LIKE - MIN_LIKE + 1}, (_, index) => index + MIN_LIKE));
+const avatarValues = shuffleArray(Array.from({length: MAX_AVATAR - MIN_AVATAR + 1}, (_, index) => index + MIN_AVATAR));
 
 const generateCommentId = createIdGenerator();
 const generatePhotoId = createIdGenerator();
 const generateImageId = createIdGenerator();
+const generateLikeValue = createRandomId(likeValues);
+const generateAvatarValue = createRandomId(avatarValues);
 
 const createComment = () => ({
   id: generateCommentId(),
-  avatar: `img/avatar-${createRandomId(1, 6)}.svg`,
+  avatar: `img/avatar-${generateAvatarValue()}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES),
 });
@@ -58,7 +58,7 @@ const createPhoto = () => ({
   id: generatePhotoId(),
   url: `photos/${generateImageId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: createRandomId(15, 200),
+  likes: generateLikeValue(),
   comments: Array.from({ length: SIMILAR_COMMENT_COUNT }, createComment),
 });
 
