@@ -40,7 +40,7 @@ const LikesCount = {
 const AvatarCount = {
   MIN: 1,
   MAX: 6,
-}
+};
 
 const likeValues = shuffleArray(Array.from({length: LikesCount.MAX - LikesCount.MIN + 1}, (_, index) => index + LikesCount.MIN));
 const avatarValues = shuffleArray(Array.from({length: AvatarCount.MAX - AvatarCount.MIN + 1}, (_, index) => index + AvatarCount.MIN));

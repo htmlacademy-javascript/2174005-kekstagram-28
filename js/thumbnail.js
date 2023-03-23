@@ -8,7 +8,7 @@ const thumbnailTemplate = document.querySelector('#picture')
 const renderThumbnails = createPhotos();
 const similarThumbnails = document.createDocumentFragment();
 
-renderThumbnails.forEach(({url, comments, likes}) => {
+renderThumbnails.forEach(({url, comments, likes, description}) => {
   const thumbnailElement = thumbnailTemplate.cloneNode(true);
   thumbnailElement.querySelector('.picture__img').src = url;
   thumbnailElement.querySelector('.picture__comments').textContent = comments.length;
