@@ -1,20 +1,23 @@
-import {createPhotos} from './data.js';
+import {createPhotos} from './data';
+import {showBigPicture} from './full-size-picture';
 
-const picturesContainer = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture')
+const thumbnailsContainer = document.querySelector('.pictures');
+const thumbnailTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
+const renderThumbnails = createPhotos();
+const similarThumbnails = document.createDocumentFragment();
 
-const thumbnails = createPhotos();
-
-const similarThumbnail = document.createDocumentFragment();
-
-thumbnails.forEach(({url, comments, likes}) => {
-  const thumbnailElement = pictureTemplate.cloneNode(true);
+renderThumbnails.forEach(({url, comments, likes}) => {
+  const thumbnailElement = thumbnailTemplate.cloneNode(true);
   thumbnailElement.querySelector('.picture__img').src = url;
   thumbnailElement.querySelector('.picture__comments').textContent = comments.length;
   thumbnailElement.querySelector('.picture__likes').textContent = likes;
-  similarThumbnail.appendChild(thumbnailElement);
+  thumbnailElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    showBigPicture(url, likes, comments, description);
+  });
+  similarThumbnails.append(thumbnailElement);
 });
 
-picturesContainer.appendChild(similarThumbnail);
+thumbnailsContainer.append(similarThumbnails);

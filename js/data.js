@@ -33,13 +33,17 @@ const NAMES = [
 
 const SIMILAR_PHOTO_COUNT = 25;
 const SIMILAR_COMMENT_COUNT = 3;
-const MIN_LIKE = 15;
-const MAX_LIKE = 200;
-const MIN_AVATAR = 1;
-const MAX_AVATAR = 6;
+const LikesCount = {
+  MIN: 15,
+  MAX: 200,
+};
+const AvatarCount = {
+  MIN: 1,
+  MAX: 6,
+}
 
-const likeValues = shuffleArray(Array.from({length: MAX_LIKE - MIN_LIKE + 1}, (_, index) => index + MIN_LIKE));
-const avatarValues = shuffleArray(Array.from({length: MAX_AVATAR - MIN_AVATAR + 1}, (_, index) => index + MIN_AVATAR));
+const likeValues = shuffleArray(Array.from({length: LikesCount.MAX - LikesCount.MIN + 1}, (_, index) => index + LikesCount.MIN));
+const avatarValues = shuffleArray(Array.from({length: AvatarCount.MAX - AvatarCount.MIN + 1}, (_, index) => index + AvatarCount.MIN));
 
 const generateCommentId = createIdGenerator();
 const generatePhotoId = createIdGenerator();
