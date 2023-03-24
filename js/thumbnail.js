@@ -1,5 +1,5 @@
-import {createPhotos} from './data';
-import {showBigPicture} from './full-size-picture';
+import {createPhotos} from './data.js';
+import {showBigPicture} from './full-size-picture.js';
 
 const thumbnailsContainer = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture')
