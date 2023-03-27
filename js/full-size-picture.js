@@ -1,6 +1,8 @@
 import {isEscapeKey} from './util.js';
+import {thumbnailsList} from './data.js';
 
 const body = document.querySelector('body');
+const thumbnailsContainer = document.querySelector('.pictures');
 const bigPictureContainer = document.querySelector('.big-picture');
 const bigImage = bigPictureContainer.querySelector('.big-picture__img img');
 const bigImageLikesCount = bigPictureContainer.querySelector('.likes-count');
@@ -57,8 +59,23 @@ const showBigPicture = (url, likes, comments, description) => {
   renderComments(comments);
 };
 
+const renderBigPicture = () => {
+  thumbnailsContainer.addEventListener('click', (evt) => {
+    const thumbnail = evt.target.closest('[data-thumbnail-id]');
+    if (!thumbnail) {
+      return;
+    }
+
+    const picture = thumbnailsList.find(
+      (item) => item.id === +(thumbnail.dataset.thumbnailId)
+    );
+
+    showBigPicture(picture);
+  });
+};
+
 bigImageCancel.addEventListener('click', () =>
   closeUserModal()
 );
 
-export {showBigPicture};
+renderBigPicture();

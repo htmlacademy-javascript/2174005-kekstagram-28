@@ -41,6 +41,5 @@ const createRandomId = (array) => {
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
-const isEnterKey = (evt) => evt.key === 'Enter';
 
 export {getRandomArrayElement, createIdGenerator, shuffleArray, createRandomId, isEscapeKey, isEnterKey};
