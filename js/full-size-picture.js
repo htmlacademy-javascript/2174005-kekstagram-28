@@ -2,7 +2,7 @@ import {isEscapeKey} from './util.js';
 
 const body = document.querySelector('body');
 const bigPictureContainer = document.querySelector('.big-picture');
-const bigImage = bigPictureContainer.querySelector('.big-picture__img');
+const bigImage = bigPictureContainer.querySelector('.big-picture__img img');
 const bigImageLikesCount = bigPictureContainer.querySelector('.likes-count');
 const bigImageCaption = bigPictureContainer.querySelector('.social__caption');
 const bigImageCancel = bigPictureContainer.querySelector('.big-picture__cancel');
@@ -43,13 +43,13 @@ const renderComments = (commentsArray) => {
     newComment.querySelector('.social__picture').src = avatar;
     newComment.querySelector('.social__picture').alt = name;
     newComment.querySelector('.social__text').textContent = message;
-    commentsContainer.append(newComment);
+    return newComment;
   });
 };
 
 const showBigPicture = (url, likes, comments, description) => {
   openUserModal();
-  bigImage.querySelector('img').src = url;
+  bigImage.src = url;
   bigImageLikesCount.textContent = likes;
   commentCount.textContent = comments.length;
   bigImageCaption.textContent = description;
