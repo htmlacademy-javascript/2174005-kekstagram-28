@@ -40,4 +40,6 @@ const createRandomId = (array) => {
   };
 };
 
-export {getRandomArrayElement, createIdGenerator, shuffleArray, createRandomId};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomArrayElement, createIdGenerator, shuffleArray, createRandomId, isEscapeKey};

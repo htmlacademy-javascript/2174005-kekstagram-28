@@ -1,20 +1,20 @@
-import {createPhotos} from './data.js';
+import {thumbnailsList} from './data.js';
 
-const picturesContainer = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture')
+const thumbnailsContainer = document.querySelector('.pictures');
+const thumbnailTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
+const similarThumbnails = document.createDocumentFragment();
 
-const thumbnails = createPhotos();
-
-const similarThumbnail = document.createDocumentFragment();
-
-thumbnails.forEach(({url, comments, likes}) => {
-  const thumbnailElement = pictureTemplate.cloneNode(true);
+thumbnailsList.forEach(({url, comments, likes, description, id}) => {
+  const thumbnailElement = thumbnailTemplate.cloneNode(true);
   thumbnailElement.querySelector('.picture__img').src = url;
+  thumbnailElement.querySelector('.picture__img').alt = description;
   thumbnailElement.querySelector('.picture__comments').textContent = comments.length;
   thumbnailElement.querySelector('.picture__likes').textContent = likes;
-  similarThumbnail.appendChild(thumbnailElement);
+  thumbnailElement.dataset.thumbnailId = id;
+
+  similarThumbnails.append(thumbnailElement);
 });
 
-picturesContainer.appendChild(similarThumbnail);
+thumbnailsContainer.append(similarThumbnails);
