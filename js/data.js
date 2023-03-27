@@ -67,6 +67,6 @@ const createPhoto = () => ({
 });
 
 const createPhotos = () => Array.from({ length: SIMILAR_PHOTO_COUNT }, createPhoto);
-const renderThumbnails = createPhotos();
+const thumbnailsList = createPhotos();
 
-export {renderThumbnails};
+export {thumbnailsList};
