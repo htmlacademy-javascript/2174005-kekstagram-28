@@ -17,7 +17,7 @@ const commentsCount = bigPictureContainer.querySelector('.social__comment-count'
 const commentsLoader = bigPictureContainer.querySelector('.comments-loader');
 
 let commentsShown = 0;
-const comments = [];
+let comments = [];
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -67,13 +67,11 @@ const renderComments = () => {
   commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
 };
 
-const showBigPicture = (url, likes, description) => {
+const showBigPicture = ({url, likes, description}) => {
   openUserModal();
   bigImage.src = url;
   bigImageLikesCount.textContent = likes;
   bigImageCaption.textContent = description;
-  commentsContainer.innerHTML = '';
-  renderComments();
 };
 
 const renderBigPicture = () => {
@@ -88,7 +86,9 @@ const renderBigPicture = () => {
       (item) => item.id === +(thumbnail.dataset.thumbnailId)
     );
 
+    comments = Array.from(picture.comments);
     showBigPicture(picture);
+    renderComments(comments);
   });
 };
 
