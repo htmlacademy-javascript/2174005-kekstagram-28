@@ -82,6 +82,7 @@ const renderBigPicture = () => {
     if (!thumbnail) {
       return;
     }
+    evt.preventDefault();
 
     const picture = thumbnailsList.find(
       (item) => item.id === +(thumbnail.dataset.thumbnailId)
