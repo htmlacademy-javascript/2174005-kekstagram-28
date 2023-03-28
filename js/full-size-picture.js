@@ -13,12 +13,11 @@ const bigImageCancel = bigPictureContainer.querySelector('.big-picture__cancel')
 
 const commentsContainer = bigPictureContainer.querySelector('.social__comments');
 const commentItem = commentsContainer.querySelector('.social__comment');
-const commentCount = bigPictureContainer.querySelector('.comments-count');
 const commentsCount = bigPictureContainer.querySelector('.social__comment-count');
 const commentsLoader = bigPictureContainer.querySelector('.comments-loader');
 
 let commentsShown = 0;
-let comments = [];
+const comments = [];
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -41,9 +40,9 @@ function closeUserModal () {
 
 const showComment = ({ avatar, name, message }) => {
   const newComment = commentItem.cloneNode(true);
-  newComment.querySelector(".social__picture").src = avatar;
-  newComment.querySelector(".social__picture").alt = name;
-  newComment.querySelector(".social__text").textContent = message;
+  newComment.querySelector('.social__picture').src = avatar;
+  newComment.querySelector('.social__picture').alt = name;
+  newComment.querySelector('.social__text').textContent = message;
   return newComment;
 };
 
@@ -68,14 +67,13 @@ const renderComments = () => {
   commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
 };
 
-const showBigPicture = (url, likes, comments, description) => {
+const showBigPicture = (url, likes, description) => {
   openUserModal();
   bigImage.src = url;
   bigImageLikesCount.textContent = likes;
-  commentCount.textContent = comments.length;
   bigImageCaption.textContent = description;
   commentsContainer.innerHTML = '';
-  renderComments(comments);
+  renderComments();
 };
 
 const renderBigPicture = () => {
