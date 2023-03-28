@@ -35,6 +35,7 @@ function openUserModal () {
 function closeUserModal () {
   bigPictureContainer.classList.add('hidden');
   body.classList.remove('modal-open');
+  commentsShown = 0;
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
@@ -49,7 +50,7 @@ const showComment = ({ avatar, name, message }) => {
 const renderComments = () => {
   commentsShown += COMMENTS_PER_PORTION;
 
-  if(commentsShown >= comments.length) {
+  if (commentsShown >= comments.length) {
     commentsLoader.classList.add('hidden');
     commentsLoader.removeEventListener('click', onCommentsLoaderClick);
     commentsShown = comments.length;
