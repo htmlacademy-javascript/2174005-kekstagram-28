@@ -51,6 +51,7 @@ const renderComments = () => {
 
   if(commentsShown >= comments.length) {
     commentsLoader.classList.add('hidden');
+    commentsLoader.removeEventListener('click', onCommentsLoaderClick);
     commentsShown = comments.length;
   } else {
     commentsLoader.classList.remove('hidden');
@@ -67,11 +68,16 @@ const renderComments = () => {
   commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
 };
 
+function onCommentsLoaderClick () {
+  renderComments();
+}
+
 const showBigPicture = ({url, likes, description}) => {
   openUserModal();
   bigImage.src = url;
   bigImageLikesCount.textContent = likes;
   bigImageCaption.textContent = description;
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
 const renderBigPicture = () => {
@@ -87,8 +93,8 @@ const renderBigPicture = () => {
     );
 
     comments = Array.from(picture.comments);
-    showBigPicture(picture);
     renderComments(comments);
+    showBigPicture(picture);
   });
 };
 
