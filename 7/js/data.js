@@ -32,7 +32,10 @@ const NAMES = [
 ];
 
 const SIMILAR_PHOTO_COUNT = 25;
-const SIMILAR_COMMENT_COUNT = 3;
+const CommentCount = {
+  MIN: 3,
+  MAX: 15,
+};
 const LikesCount = {
   MIN: 15,
   MAX: 200,
@@ -44,12 +47,14 @@ const AvatarCount = {
 
 const likeValues = shuffleArray(Array.from({length: LikesCount.MAX - LikesCount.MIN + 1}, (_, index) => index + LikesCount.MIN));
 const avatarValues = shuffleArray(Array.from({length: AvatarCount.MAX - AvatarCount.MIN + 1}, (_, index) => index + AvatarCount.MIN));
+const commentValues = shuffleArray(Array.from({length: CommentCount.MAX - CommentCount.MIN + 1}, (_, index) => index + CommentCount.MIN));
 
 const generateCommentId = createIdGenerator();
 const generatePhotoId = createIdGenerator();
 const generateImageId = createIdGenerator();
 const generateLikeValue = createRandomId(likeValues);
 const generateAvatarValue = createRandomId(avatarValues);
+const generateCommentValue = createRandomId(commentValues);
 
 const createComment = () => ({
   id: generateCommentId(),
@@ -63,7 +68,7 @@ const createPhoto = () => ({
   url: `photos/${generateImageId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: generateLikeValue(),
-  comments: Array.from({ length: SIMILAR_COMMENT_COUNT }, createComment),
+  comments: Array.from({ length: generateCommentValue() }, createComment),
 });
 
 const createPhotos = () => Array.from({ length: SIMILAR_PHOTO_COUNT }, createPhoto);
