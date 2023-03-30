@@ -26,11 +26,11 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function openUserModal () {
+const openUserModal = () => {
   bigPictureContainer.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-}
+};
 
 function closeUserModal () {
   bigPictureContainer.classList.add('hidden');
