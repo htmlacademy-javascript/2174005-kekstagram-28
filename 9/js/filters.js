@@ -1,12 +1,13 @@
+const DEFAULT_FILTER = {
+  name: 'none',
+  style: 'none',
+  min: 0,
+  max: 100,
+  step: 1,
+  unit: ''
+};
+
 const FILTERS = [
-  {
-    name: 'none',
-    style: 'none',
-    min: 0,
-    max: 100,
-    step: 1,
-    unit: ''
-  },
   {
     name: 'chrome',
     style: 'grayscale',
@@ -48,8 +49,6 @@ const FILTERS = [
     unit: ''
   }
 ];
-
-const DEFAULT_FILTER = FILTERS[0];
 
 const imageElement = document.querySelector('.img-upload__preview img');
 const filtersContainer = document.querySelector('.effects__list');
@@ -120,7 +119,7 @@ noUiSlider.create(sliderElement, {
 
 hideSlider();
 
-filtersContainer.addEventListener('change',onFiltersChange);
+filtersContainer.addEventListener('change', onFiltersChange);
 sliderElement.noUiSlider.on('update', onSliderUpdate);
 
 export {resetFilters};
