@@ -110,11 +110,11 @@ const resetFilters = () => {
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: DEFAULT_EFFECT.min,
-    max: DEFAULT_EFFECT.max,
+    min: DEFAULT_FILTER.min,
+    max: DEFAULT_FILTER.max,
   },
-  start: DEFAULT_EFFECT.max,
-  step: DEFAULT_EFFECT.step,
+  start: DEFAULT_FILTER.max,
+  step: DEFAULT_FILTER.step,
   connect:'lower',
 });
 
