@@ -11,7 +11,7 @@ const imageElement = document.querySelector('.img-upload__preview img');
 let currentScaleValue = parseInt(scaleFieldElement.value, 10);
 
 const scaleImage = (value) => {
-  imageElement.getElementsByClassName.transform = `scale(${value / 100})`;
+  imageElement.style.transform = `scale(${value / 100})`;
   scaleFieldElement.value = `${value}%`;
 };
 
