@@ -51,7 +51,7 @@ function closeModal () {
   hashtagField.removeEventListener('input', disableSendButton);
   uploadForm.reset();
   pristine.reset();
-  resetScale();
+  resetZoom();
   resetFilters();
 }
 
