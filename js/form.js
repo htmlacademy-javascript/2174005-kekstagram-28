@@ -1,3 +1,6 @@
+import { resetScale } from './scale.js';
+import { resetFilters } from './filters.js';
+
 const MAX_TAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TAGS_MESSAGE = 'Неправильно введены хештеги';
@@ -48,6 +51,8 @@ function closeModal () {
   hashtagField.removeEventListener('input', disableSendButton);
   uploadForm.reset();
   pristine.reset();
+  resetScale();
+  resetFilters();
 }
 
 const isValidTagsCount = (tags) => tags.length <= MAX_TAG_COUNT;
