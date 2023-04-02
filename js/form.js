@@ -1,4 +1,4 @@
-import { resetScale } from './scale.js';
+import { resetZoom } from './scale.js';
 import { resetFilters } from './filters.js';
 
 const MAX_TAG_COUNT = 5;
