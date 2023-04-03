@@ -1,4 +1,3 @@
-import { closeModal, setFormSubmit } from './form.js';
 import { renderPhotos } from './thumbnail.js';
 import { renderBigPicture } from './full-size-picture.js';
 import { showAlert } from './util.js';
@@ -12,5 +11,3 @@ getData()
   .catch((err) => {
     showAlert(err.message);
   });
-
-setFormSubmit(closeModal);

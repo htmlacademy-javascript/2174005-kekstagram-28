@@ -1,48 +1,63 @@
+import {closeModal, onDocumentKeydown} from './form.js';
+
 const ALERT_SHOW_TIME = 5000;
 
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(min, max));
-  const upper = Math.floor(Math.max(min, max));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
+const body = document.body;
+const successMessageTemplate = document.querySelector('#success').content;
+const newSuccessMessage = successMessageTemplate.cloneNode(true);
+const successButton = newSuccessMessage.querySelector('.success__button');
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-const createIdGenerator = () => {
-  let i = 0;
-
-  return function () {
-    i += 1;
-    return i;
-  };
-};
-
-const shuffleArray = (array) => {
-  let j, temp;
-  for (let i = array.length - 1; i > 0; i--) {
-    j = Math.floor(Math.random() * (i + 1));
-    temp = array[j];
-    array[j] = array[i];
-    array[i] = temp;
-  }
-  return array;
-};
-
-const createRandomId = (array) => {
-  let i = 0;
-  const arrayCount = array.length - 1;
-  return function () {
-    if (i === arrayCount) {
-      i = 0;
-    } else {
-      i += 1;
-    }
-    return array[i];
-  };
-};
+const errorMessageTemplate = document.querySelector('#error').content;
+const newErrorMessage = errorMessageTemplate.cloneNode(true);
+const errorButton = newErrorMessage.querySelector('.error__button');
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const createMessages = () => {
+  body.append(newSuccessMessage);
+  document.querySelector('.success').classList.add('hidden');
+  body.append(newErrorMessage);
+  document.querySelector('.error').classList.add('hidden');
+};
+
+const closeSuccessMessage = () => {
+  document.querySelector('.success').classList.add('hidden');
+  successButton.removeEventListener('click', closeSuccessMessage);
+  closeModal();
+};
+
+const showSuccessMessage = () => {
+  document.querySelector('.success').classList.remove('hidden');
+  successButton.addEventListener('click', closeSuccessMessage);
+};
+
+const onDocumentErrorKeydown = (evt) => {
+  if(evt.key === 'Escape'){
+    closeErrorMessage();
+  }
+};
+
+const onDocumentClick = (evt) => {
+  if(evt.target.classList.contains('error')){
+    closeErrorMessage();
+  }
+};
+
+function closeErrorMessage () {
+  document.querySelector('.error').classList.add('hidden');
+  errorButton.removeEventListener('click', closeErrorMessage);
+  document.removeEventListener('keydown', onDocumentErrorKeydown);
+  document.removeEventListener('click', onDocumentClick);
+  document.addEventListener('keydown', onDocumentKeydown);
+}
+
+const showErrorMessage = () => {
+  document.querySelector('.error').classList.remove('hidden');
+  errorButton.addEventListener('click', closeErrorMessage);
+  document.addEventListener('keydown', onDocumentErrorKeydown);
+  document.addEventListener('click', onDocumentClick);
+  document.removeEventListener('keydown', onDocumentKeydown);
+};
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -63,6 +78,8 @@ const showAlert = (message) => {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}
+};
 
-export {getRandomArrayElement, createIdGenerator, shuffleArray, createRandomId, isEscapeKey, showAlert};
+createMessages();
+
+export {isEscapeKey, showSuccessMessage, showErrorMessage, showAlert};

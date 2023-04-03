@@ -1,6 +1,6 @@
 import { resetZoom } from './scale.js';
 import { resetFilters } from './filters.js';
-import { showAlert } from './util.js';
+import { showSuccessMessage, showErrorMessage } from './util.js';
 import {sendData} from './api.js';
 
 const MAX_TAG_COUNT = 5;
@@ -79,23 +79,20 @@ pristine.addValidator(
   ERROR_TAGS_MESSAGE
 );
 
-const setFormSubmit = (onSuccess) => {
-  uploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
 
-    const isValid = pristine.validate();
-    if (isValid) {
-      sendData(new FormData(evt.target))
-        .then(onSuccess)
-        .catch((err) => {
-          showAlert(err.message);
-        });
-    }
-  });
-};
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    const formData = new FormData(evt.target);
+    sendData(showSuccessMessage, showErrorMessage, formData);
+  }
+});
+
 
 uploadControl.addEventListener('change', () =>
   openModal()
 );
 
-export {setFormSubmit, closeModal};
+export {onDocumentKeydown, closeModal};
