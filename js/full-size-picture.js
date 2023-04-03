@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import { renderPhotos } from './thumbnail.js';
 
 const COMMENTS_PER_PORTION = 5;
 
@@ -81,6 +82,7 @@ const showBigPicture = ({url, likes, description}) => {
 };
 
 const renderBigPicture = (data) => {
+  renderPhotos(data);
   thumbnailsContainer.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnail) {
