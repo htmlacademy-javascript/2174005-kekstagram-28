@@ -80,7 +80,7 @@ const showBigPicture = ({url, likes, description}) => {
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
-const renderBigPicture = () => {
+const renderBigPicture = (data) => {
   thumbnailsContainer.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnail) {
@@ -88,7 +88,7 @@ const renderBigPicture = () => {
     }
     evt.preventDefault();
 
-    const picture = thumbnailsList.find(
+    const picture = data.find(
       (item) => item.id === +(thumbnail.dataset.thumbnailId)
     );
 
@@ -102,4 +102,4 @@ bigImageCancel.addEventListener('click', () =>
   closeUserModal()
 );
 
-renderBigPicture();
+export {renderBigPicture};

@@ -1,6 +1,7 @@
 import { resetZoom } from './scale.js';
 import { resetFilters } from './filters.js';
 import { showAlert } from './util.js';
+import {sendData} from './api.js';
 
 const MAX_TAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -88,7 +89,7 @@ const setFormSubmit = (onSuccess) => {
         .then(onSuccess)
         .catch((err) => {
           showAlert(err.message);
-      });
+        });
     }
   });
 };
