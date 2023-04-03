@@ -1,5 +1,4 @@
 import {isEscapeKey} from './util.js';
-import {thumbnailsList} from './data.js';
 
 const COMMENTS_PER_PORTION = 5;
 

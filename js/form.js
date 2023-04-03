@@ -1,5 +1,6 @@
 import { resetZoom } from './scale.js';
 import { resetFilters } from './filters.js';
+import { showAlert } from './util.js';
 
 const MAX_TAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -77,11 +78,23 @@ pristine.addValidator(
   ERROR_TAGS_MESSAGE
 );
 
+const setFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch((err) => {
+          showAlert(err.message);
+      });
+    }
+  });
+};
+
 uploadControl.addEventListener('change', () =>
   openModal()
 );
 
-sendFormButton.addEventListener('input', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+export {setFormSubmit, closeModal};
