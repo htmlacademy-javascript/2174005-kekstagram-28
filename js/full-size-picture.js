@@ -1,4 +1,3 @@
-import {isEscapeKey} from './util.js';
 import { renderPhotos } from './thumbnail.js';
 
 const COMMENTS_PER_PORTION = 5;
@@ -18,6 +17,8 @@ const commentsLoader = bigPictureContainer.querySelector('.comments-loader');
 
 let commentsShown = 0;
 let comments = [];
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {

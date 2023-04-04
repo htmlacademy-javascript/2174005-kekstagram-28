@@ -11,8 +11,6 @@ const errorMessageTemplate = document.querySelector('#error').content;
 const newErrorMessage = errorMessageTemplate.cloneNode(true);
 const errorButton = newErrorMessage.querySelector('.error__button');
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
-
 const createMessages = () => {
   body.append(newSuccessMessage);
   document.querySelector('.success').classList.add('hidden');
@@ -82,4 +80,4 @@ const showAlert = (message) => {
 
 createMessages();
 
-export {isEscapeKey, showSuccessMessage, showErrorMessage, showAlert};
+export {showSuccessMessage, showErrorMessage, showAlert};

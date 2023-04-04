@@ -1,9 +1,15 @@
+import { showErrorMessage, showAlert } from './messages.js';
+
 const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 const DATA_URL = '/data';
-const ERROR_TEXT = 'Не удалось загрузить данные. Попробуйте обновить страницу';
 
-const getData = () =>
-  fetch(`${BASE_URL}${DATA_URL}`)
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
+
+const load = (route, onFail, method = Method.GET, body = null) =>
+  fetch(route, {method, body})
     .then((response) => {
       if (!response.ok) {
         throw new Error();
@@ -11,23 +17,11 @@ const getData = () =>
       return response.json();
     })
     .catch(() => {
-      throw new Error(ERROR_TEXT);
-    });
-
-const sendData = (onSuccess, onFail, body) => {
-  fetch(`${BASE_URL}`, {
-    method: 'POST',
-    body,
-  })
-    .then((response) => {
-      if(!response.ok){
-        throw new Error();
-      }
-      onSuccess();
-    })
-    .catch(() => {
       onFail();
     });
-};
+
+const getData = () => load(`${BASE_URL}${DATA_URL}`, showAlert);
+
+const sendData = (body) => load(`${BASE_URL}`, showErrorMessage, Method.POST, body);
 
 export {getData, sendData};

@@ -1,7 +1,7 @@
 import { resetZoom } from './scale.js';
 import { resetFilters } from './filters.js';
-import { showSuccessMessage, showErrorMessage } from './util.js';
-import {sendData} from './api.js';
+import { sendData } from './api.js';
+import { showSuccessMessage } from './messages.js';
 
 const MAX_TAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -86,10 +86,12 @@ uploadForm.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
   if (isValid) {
     const formData = new FormData(evt.target);
-    sendData(showSuccessMessage, showErrorMessage, formData);
+    sendData(formData)
+      .then(
+        showSuccessMessage()
+      );
   }
 });
-
 
 uploadControl.addEventListener('change', () =>
   openModal()
