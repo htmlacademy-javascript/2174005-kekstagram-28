@@ -15,7 +15,7 @@ const scaleImage = (value) => {
   scaleFieldElement.value = `${value}%`;
 };
 
-const decreaseScale = () => {
+const onSmallerButtonClick = () => {
   currentScaleValue -= SCALE_STEP;
   if (currentScaleValue < MIN_SCALE) {
     currentScaleValue = MIN_SCALE;
@@ -23,7 +23,7 @@ const decreaseScale = () => {
   scaleImage(currentScaleValue);
 };
 
-const increaseScale = () => {
+const onBiggerButtonClick = () => {
   currentScaleValue += SCALE_STEP;
   if (currentScaleValue > MAX_SCALE) {
     currentScaleValue = MAX_SCALE;
@@ -31,9 +31,9 @@ const increaseScale = () => {
   scaleImage(currentScaleValue);
 };
 
-const resetScale = () => scaleImage(DEFAULT_SCALE);
+const resetZoom = () => scaleImage(DEFAULT_SCALE);
 
-smallerButtonElement.addEventListener('click', decreaseScale);
-biggerButtonElement.addEventListener('click', increaseScale);
+smallerButtonElement.addEventListener('click', onSmallerButtonClick);
+biggerButtonElement.addEventListener('click', onBiggerButtonClick);
 
-export {resetScale};
+export {resetZoom};

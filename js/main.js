@@ -1,4 +1,2 @@
-import './data.js';
+import './gallery.js';
 import './form.js';
-import './thumbnail.js';
-import './full-size-picture.js';

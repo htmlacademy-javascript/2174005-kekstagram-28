@@ -1,5 +1,4 @@
-import {isEscapeKey} from './util.js';
-import {thumbnailsList} from './data.js';
+import { renderPhotos } from './thumbnail.js';
 
 const COMMENTS_PER_PORTION = 5;
 
@@ -18,6 +17,8 @@ const commentsLoader = bigPictureContainer.querySelector('.comments-loader');
 
 let commentsShown = 0;
 let comments = [];
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -81,7 +82,8 @@ const showBigPicture = ({url, likes, description}) => {
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
-const renderBigPicture = () => {
+const renderBigPicture = (data) => {
+  renderPhotos(data);
   thumbnailsContainer.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnail) {
@@ -89,7 +91,7 @@ const renderBigPicture = () => {
     }
     evt.preventDefault();
 
-    const picture = thumbnailsList.find(
+    const picture = data.find(
       (item) => item.id === +(thumbnail.dataset.thumbnailId)
     );
 
@@ -103,4 +105,4 @@ bigImageCancel.addEventListener('click', () =>
   closeUserModal()
 );
 
-renderBigPicture();
+export {renderBigPicture};

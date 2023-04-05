@@ -1,5 +1,7 @@
-import { resetScale } from './scale.js';
+import { resetZoom } from './scale.js';
 import { resetFilters } from './filters.js';
+import { sendData } from './api.js';
+import { showSuccessMessage } from './messages.js';
 
 const MAX_TAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -51,7 +53,7 @@ function closeModal () {
   hashtagField.removeEventListener('input', disableSendButton);
   uploadForm.reset();
   pristine.reset();
-  resetScale();
+  resetZoom();
   resetFilters();
 }
 
@@ -77,11 +79,22 @@ pristine.addValidator(
   ERROR_TAGS_MESSAGE
 );
 
+
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    const formData = new FormData(evt.target);
+    sendData(formData)
+      .then(
+        showSuccessMessage()
+      );
+  }
+});
+
 uploadControl.addEventListener('change', () =>
   openModal()
 );
 
-sendFormButton.addEventListener('input', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+export {onDocumentKeydown, closeModal};
