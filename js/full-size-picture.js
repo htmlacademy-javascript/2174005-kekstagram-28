@@ -1,4 +1,5 @@
 import { renderPhotos } from './thumbnail.js';
+import { isEscapeKey } from './util.js';
 
 const COMMENTS_PER_PORTION = 5;
 
@@ -19,8 +20,6 @@ const imageFiltersContainer = document.querySelector('.img-filters');
 
 let commentsShown = 0;
 let comments = [];
-
-const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
