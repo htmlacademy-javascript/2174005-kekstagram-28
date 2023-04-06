@@ -15,6 +15,8 @@ const commentItem = commentsContainer.querySelector('.social__comment');
 const commentsCount = bigPictureContainer.querySelector('.social__comment-count');
 const commentsLoader = bigPictureContainer.querySelector('.comments-loader');
 
+const imageFiltersContainer = document.querySelector('.img-filters');
+
 let commentsShown = 0;
 let comments = [];
 
@@ -99,6 +101,7 @@ const renderBigPicture = (data) => {
     renderComments(comments);
     showBigPicture(picture);
   });
+  imageFiltersContainer.classList.remove('img-filters--inactive');
 };
 
 bigImageCancel.addEventListener('click', () =>
