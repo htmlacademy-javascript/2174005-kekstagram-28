@@ -12,8 +12,8 @@ const uploadForm = document.querySelector('.img-upload__form');
 const uploadControl = uploadForm.querySelector('#upload-file');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const uploadCancelButton = uploadOverlay.querySelector('.img-upload__cancel');
-const hashtagField = document.querySelector('.text__hashtags');
-const commentField = document.querySelector('.text__description');
+const hashtagFieldElement = document.querySelector('.text__hashtags');
+const commentFieldElement = document.querySelector('.text__description');
 const sendFormButton = document.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(uploadForm, {
@@ -23,8 +23,8 @@ const pristine = new Pristine(uploadForm, {
 });
 
 const isTextFieldFocused = () =>
-  document.activeElement === hashtagField ||
-  document.activeElement === commentField;
+  document.activeElement === hashtagFieldElement ||
+  document.activeElement === commentFieldElement;
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape' && !isTextFieldFocused()) {
@@ -42,7 +42,7 @@ const openModal = () => {
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   uploadCancelButton.addEventListener('click', onModalClose);
-  hashtagField.addEventListener('input', onSendButtonDisable);
+  hashtagFieldElement.addEventListener('input', onSendButtonDisable);
 };
 
 function onModalClose () {
@@ -50,7 +50,7 @@ function onModalClose () {
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   uploadCancelButton.removeEventListener('click', onModalClose);
-  hashtagField.removeEventListener('input', onSendButtonDisable);
+  hashtagFieldElement.removeEventListener('input', onSendButtonDisable);
   uploadForm.reset();
   pristine.reset();
   resetZoom();
@@ -74,7 +74,7 @@ const validateTags = (value) => {
 };
 
 pristine.addValidator(
-  hashtagField,
+  hashtagFieldElement,
   validateTags,
   ERROR_TAGS_MESSAGE
 );

@@ -3,20 +3,20 @@ import { isEscapeKey } from './util.js';
 
 const COMMENTS_PER_PORTION = 5;
 
-const body = document.querySelector('body');
-const thumbnailsContainer = document.querySelector('.pictures');
-const bigPictureContainer = document.querySelector('.big-picture');
-const bigImage = bigPictureContainer.querySelector('.big-picture__img img');
-const bigImageLikesCount = bigPictureContainer.querySelector('.likes-count');
-const bigImageCaption = bigPictureContainer.querySelector('.social__caption');
-const bigImageCancel = bigPictureContainer.querySelector('.big-picture__cancel');
+const bodyElement = document.querySelector('body');
+const thumbnailsElement = document.querySelector('.pictures');
+const bigPictureElement = document.querySelector('.big-picture');
+const bigImage = bigPictureElement.querySelector('.big-picture__img img');
+const bigImageLikesCount = bigPictureElement.querySelector('.likes-count');
+const bigImageCaption = bigPictureElement.querySelector('.social__caption');
+const bigImageCancel = bigPictureElement.querySelector('.big-picture__cancel');
 
-const commentsContainer = bigPictureContainer.querySelector('.social__comments');
-const commentItem = commentsContainer.querySelector('.social__comment');
-const commentsCount = bigPictureContainer.querySelector('.social__comment-count');
-const commentsLoader = bigPictureContainer.querySelector('.comments-loader');
+const commentsElement = bigPictureElement.querySelector('.social__comments');
+const commentElement = commentsElement.querySelector('.social__comment');
+const commentsCount = bigPictureElement.querySelector('.social__comment-count');
+const commentsLoader = bigPictureElement.querySelector('.comments-loader');
 
-const imageFiltersContainer = document.querySelector('.img-filters');
+const imageFiltersElement = document.querySelector('.img-filters');
 
 let commentsShown = 0;
 let comments = [];
@@ -29,20 +29,20 @@ const onDocumentKeydown = (evt) => {
 };
 
 const openUserModal = () => {
-  bigPictureContainer.classList.remove('hidden');
-  body.classList.add('modal-open');
+  bigPictureElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 function closeUserModal () {
-  bigPictureContainer.classList.add('hidden');
-  body.classList.remove('modal-open');
+  bigPictureElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
   commentsShown = 0;
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
 const showComment = ({ avatar, name, message }) => {
-  const newComment = commentItem.cloneNode(true);
+  const newComment = commentElement.cloneNode(true);
   newComment.querySelector('.social__picture').src = avatar;
   newComment.querySelector('.social__picture').alt = name;
   newComment.querySelector('.social__text').textContent = message;
@@ -66,8 +66,8 @@ const renderComments = () => {
     fragment.append(commentElement);
   }
 
-  commentsContainer.innerHTML = '';
-  commentsContainer.append(fragment);
+  commentsElement.innerHTML = '';
+  commentsElement.append(fragment);
   commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
 };
 
@@ -85,7 +85,7 @@ const showBigPicture = ({url, likes, description}) => {
 
 const renderBigPicture = (data) => {
   renderPhotos(data);
-  thumbnailsContainer.addEventListener('click', (evt) => {
+  thumbnailsElement.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnail) {
       return;
@@ -100,7 +100,7 @@ const renderBigPicture = (data) => {
     renderComments(comments);
     showBigPicture(picture);
   });
-  imageFiltersContainer.classList.remove('img-filters--inactive');
+  imageFiltersElement.classList.remove('img-filters--inactive');
 };
 
 bigImageCancel.addEventListener('click', () =>

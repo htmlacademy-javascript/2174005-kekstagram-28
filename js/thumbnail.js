@@ -1,4 +1,4 @@
-const thumbnailsContainer = document.querySelector('.pictures');
+const thumbnailsElement = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
@@ -16,7 +16,7 @@ const renderPhotos = (thumbnailsData) => {
     similarThumbnails.append(thumbnailElement);
   });
 
-  thumbnailsContainer.append(similarThumbnails);
+  thumbnailsElement.append(similarThumbnails);
 };
 
 export {renderPhotos};
