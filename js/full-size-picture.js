@@ -13,8 +13,9 @@ const bigImageCancel = bigPictureElement.querySelector('.big-picture__cancel');
 
 const commentsElement = bigPictureElement.querySelector('.social__comments');
 const commentElement = commentsElement.querySelector('.social__comment');
-const commentsCount = bigPictureElement.querySelector('.social__comment-count');
 const commentsLoader = bigPictureElement.querySelector('.comments-loader');
+const socialCommentsCount = bigPictureElement.querySelector('.social__comment-count');
+const commentsCount = bigPictureElement.querySelector('.comments-count');
 
 const imageFiltersElement = document.querySelector('.img-filters');
 
@@ -61,13 +62,16 @@ const renderComments = () => {
 
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < commentsShown; i++) {
-    const commentElement = showComment(comments[i]); //переназвать константу
-    fragment.append(commentElement);
+    fragment.append(showComment(comments[i]));
   }
 
   commentsElement.innerHTML = '';
   commentsElement.append(fragment);
-  commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
+
+  const commentsShownElement = `${commentsShown} из `;
+  commentsCount.textContent = `${comments.length}`;
+  const commentsTextElement = ' комментариев';
+  socialCommentsCount.textContent = commentsShownElement + commentsCount.textContent + commentsTextElement;
 };
 
 function onCommentsLoaderClick () {
