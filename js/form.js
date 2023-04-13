@@ -49,8 +49,6 @@ function onModalClose () {
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadCancelButton.removeEventListener('click', onModalClose);
-  hashtagFieldElement.removeEventListener('input', onSendButtonDisable);
   uploadForm.reset();
   pristine.reset();
   resetZoom();

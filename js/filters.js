@@ -78,11 +78,7 @@ const updateSlider = () => {
     start: chosenFilter.max,
   });
 
-  if(isDefault()){
-    hideSlider();
-  } else {
-    showSlider();
-  }
+  isDefault() ? hideSlider() : showSlider();
 };
 
 const onFiltersChange = (evt) => {

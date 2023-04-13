@@ -12,15 +12,13 @@ const newErrorMessage = errorMessageTemplate.cloneNode(true);
 const errorButton = newErrorMessage.querySelector('.error__button');
 
 const createMessages = () => {
-  bodyElement.append(newSuccessMessage);
+  bodyElement.append(newSuccessMessage, newErrorMessage);
   document.querySelector('.success').classList.add('hidden');
-  bodyElement.append(newErrorMessage);
   document.querySelector('.error').classList.add('hidden');
 };
 
 const onSuccessButtonClose = () => {
   document.querySelector('.success').classList.add('hidden');
-  successButton.removeEventListener('click', onSuccessButtonClose);
   onModalClose();
 };
 

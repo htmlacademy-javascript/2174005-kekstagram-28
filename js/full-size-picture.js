@@ -54,7 +54,6 @@ const renderComments = () => {
 
   if (commentsShown >= comments.length) {
     commentsLoader.classList.add('hidden');
-    commentsLoader.removeEventListener('click', onCommentsLoaderClick);
     commentsShown = comments.length;
   } else {
     commentsLoader.classList.remove('hidden');
@@ -62,7 +61,7 @@ const renderComments = () => {
 
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < commentsShown; i++) {
-    const commentElement = showComment(comments[i]);
+    const commentElement = showComment(comments[i]); //переназвать константу
     fragment.append(commentElement);
   }
 
@@ -83,23 +82,25 @@ const showBigPicture = ({url, likes, description}) => {
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
-const renderBigPicture = (data) => {
+const onThumbnailClick = (evt) => {
+  const thumbnail = evt.target.closest('[data-thumbnail-id]');
+  if (!thumbnail) {
+    return;
+  }
+  evt.preventDefault();
+
+  const picture = data.find(
+    (item) => item.id === +(thumbnail.dataset.thumbnailId)
+  );
+
+  comments = Array.from(picture.comments);
+  renderComments(comments);
+  showBigPicture(picture);
+};
+
+const showPhotos = (data) => {
   renderPhotos(data);
-  thumbnailsElement.addEventListener('click', (evt) => {
-    const thumbnail = evt.target.closest('[data-thumbnail-id]');
-    if (!thumbnail) {
-      return;
-    }
-    evt.preventDefault();
-
-    const picture = data.find(
-      (item) => item.id === +(thumbnail.dataset.thumbnailId)
-    );
-
-    comments = Array.from(picture.comments);
-    renderComments(comments);
-    showBigPicture(picture);
-  });
+  thumbnailsElement.addEventListener('click', onThumbnailClick);
   imageFiltersElement.classList.remove('img-filters--inactive');
 };
 
@@ -107,4 +108,4 @@ bigImageCancel.addEventListener('click', () =>
   closeUserModal()
 );
 
-export {renderBigPicture};
+export {showPhotos};

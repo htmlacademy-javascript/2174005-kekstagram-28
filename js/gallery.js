@@ -1,9 +1,9 @@
-import { renderBigPicture } from './full-size-picture.js';
+import { showPhotos } from './full-size-picture.js';
 import { getData } from './api.js';
 import { changeFilter } from './image-filters.js';
 
 getData()
   .then((data) => {
-    renderBigPicture(data);
+    showPhotos(data);
     changeFilter(data);
   });
