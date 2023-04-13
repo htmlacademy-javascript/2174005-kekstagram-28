@@ -34,8 +34,8 @@ const onDocumentKeydown = (evt) => {
 };
 
 const onSendButtonDisable = () => pristine.validate()
-  ? sendFormButton.removeAttribute('disabled')
-  : sendFormButton.setAttribute('disabled', true);
+  ? sendFormButton.disabled
+  : sendFormButton.disabled = true;
 
 const openModal = () => {
   uploadOverlay.classList.remove('hidden');
