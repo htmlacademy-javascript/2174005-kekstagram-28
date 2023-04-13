@@ -7,48 +7,43 @@ const DEFAULT_FILTER = {
   unit: ''
 };
 
-const FILTERS = [
-  {
-    name: 'chrome',
+const Filter = {
+  chrome: {
     style: 'grayscale',
     min: 0,
     max: 1,
     step: 0.1,
     unit: ''
   },
-  {
-    name: 'sepia',
+  sepia: {
     style: 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
     unit: ''
   },
-  {
-    name: 'marvin',
+  marvin: {
     style: 'invert',
     min: 0,
     max: 100,
     step: 1,
     unit: '%'
   },
-  {
-    name: 'phobos',
+  phobos: {
     style: 'blur',
     min: 0,
     max: 3,
     step: 0.1,
     unit: 'px',
   },
-  {
-    name: 'heat',
+  heat: {
     style: 'brightness',
     min: 1,
     max: 3,
     step: 0.1,
     unit: ''
   }
-];
+};
 
 const imageElement = document.querySelector('.img-upload__preview img');
 const filtersContainerElement = document.querySelector('.effects__list');
@@ -82,11 +77,12 @@ const updateSlider = () => {
 };
 
 const onFiltersChange = (evt) => {
-  if(!evt.target.classList.contains('effects__radio')) {
+  const currentFilterInput = evt.target.classList.contains('effects__radio');
+  if(!currentFilterInput) {
     return;
   }
-  chosenFilter = FILTERS.find((filter) => filter.name === evt.target.value);
-  imageElement.className = `effects__preview--${chosenFilter.name}`;
+  chosenFilter = Filter[currentFilterInput.value];
+  imageElement.className = `effects__preview--${currentFilterInput.value}`;
   updateSlider();
 };
 
