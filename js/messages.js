@@ -1,4 +1,4 @@
-import {closeModal, onDocumentKeydown} from './form.js';
+import {onModalClose, onDocumentKeydown} from './form.js';
 
 const ALERT_SHOW_TIME = 5000;
 
@@ -18,32 +18,32 @@ const createMessages = () => {
   document.querySelector('.error').classList.add('hidden');
 };
 
-const closeSuccessMessage = () => {
+const onSuccessButtonClose = () => {
   document.querySelector('.success').classList.add('hidden');
-  successButton.removeEventListener('click', closeSuccessMessage);
-  closeModal();
+  successButton.removeEventListener('click', onSuccessButtonClose);
+  onModalClose();
 };
 
 const showSuccessMessage = () => {
   document.querySelector('.success').classList.remove('hidden');
-  successButton.addEventListener('click', closeSuccessMessage);
+  successButton.addEventListener('click', onSuccessButtonClose);
 };
 
 const onDocumentErrorKeydown = (evt) => {
   if(evt.key === 'Escape'){
-    closeErrorMessage();
+    onErrorButtonClose();
   }
 };
 
 const onDocumentClick = (evt) => {
   if(evt.target.classList.contains('error')){
-    closeErrorMessage();
+    onErrorButtonClose();
   }
 };
 
-function closeErrorMessage () {
+function onErrorButtonClose () {
   document.querySelector('.error').classList.add('hidden');
-  errorButton.removeEventListener('click', closeErrorMessage);
+  errorButton.removeEventListener('click', onErrorButtonClose);
   document.removeEventListener('keydown', onDocumentErrorKeydown);
   document.removeEventListener('click', onDocumentClick);
   document.addEventListener('keydown', onDocumentKeydown);
@@ -51,7 +51,7 @@ function closeErrorMessage () {
 
 const showErrorMessage = () => {
   document.querySelector('.error').classList.remove('hidden');
-  errorButton.addEventListener('click', closeErrorMessage);
+  errorButton.addEventListener('click', onErrorButtonClose);
   document.addEventListener('keydown', onDocumentErrorKeydown);
   document.addEventListener('click', onDocumentClick);
   document.removeEventListener('keydown', onDocumentKeydown);

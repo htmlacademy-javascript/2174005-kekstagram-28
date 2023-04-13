@@ -29,11 +29,11 @@ const isTextFieldFocused = () =>
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape' && !isTextFieldFocused()) {
     evt.preventDefault();
-    closeModal();
+    onModalClose();
   }
 };
 
-const disableSendButton = () => pristine.validate()
+const onSendButtonDisable = () => pristine.validate()
   ? sendFormButton.removeAttribute('disabled')
   : sendFormButton.setAttribute('disabled', true);
 
@@ -41,16 +41,16 @@ const openModal = () => {
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  uploadCancelButton.addEventListener('click', closeModal);
-  hashtagField.addEventListener('input', disableSendButton);
+  uploadCancelButton.addEventListener('click', onModalClose);
+  hashtagField.addEventListener('input', onSendButtonDisable);
 };
 
-function closeModal () {
+function onModalClose () {
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadCancelButton.removeEventListener('click', closeModal);
-  hashtagField.removeEventListener('input', disableSendButton);
+  uploadCancelButton.removeEventListener('click', onModalClose);
+  hashtagField.removeEventListener('input', onSendButtonDisable);
   uploadForm.reset();
   pristine.reset();
   resetZoom();
@@ -97,4 +97,4 @@ uploadControl.addEventListener('change', () =>
   openModal()
 );
 
-export {onDocumentKeydown, closeModal};
+export {onDocumentKeydown, onModalClose};

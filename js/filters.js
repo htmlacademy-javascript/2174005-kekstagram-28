@@ -94,7 +94,7 @@ const onFiltersChange = (evt) => {
   updateSlider();
 };
 
-const onSliderUpdate = () =>{
+const onSliderUpdate = () => {
   const sliderValue = sliderElement.noUiSlider.get();
   imageElement.style.filter = isDefault()
     ? DEFAULT_FILTER.style
