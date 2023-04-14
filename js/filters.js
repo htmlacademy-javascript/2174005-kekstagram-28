@@ -63,6 +63,18 @@ const showSlider = () => {
   sliderContainerElement.classList.remove('hidden');
 };
 
+noUiSlider.create(sliderElement, {
+  range: {
+    min: DEFAULT_FILTER.min,
+    max: DEFAULT_FILTER.max,
+  },
+  start: DEFAULT_FILTER.max,
+  step: DEFAULT_FILTER.step,
+  connect:'lower',
+});
+
+hideSlider();
+
 const updateSlider = () => {
   sliderElement.noUiSlider.updateOptions({
     range: {
@@ -73,7 +85,8 @@ const updateSlider = () => {
     start: chosenFilter.max,
   });
 
-  isDefault() ? hideSlider() : showSlider();
+  const isReallyDefault = () => isDefault() ? hideSlider() : showSlider();
+  isReallyDefault();
 };
 
 const onFiltersChange = (evt) => {
@@ -98,18 +111,6 @@ const resetFilters = () => {
   chosenFilter = DEFAULT_FILTER;
   updateSlider();
 };
-
-noUiSlider.create(sliderElement, {
-  range: {
-    min: DEFAULT_FILTER.min,
-    max: DEFAULT_FILTER.max,
-  },
-  start: DEFAULT_FILTER.max,
-  step: DEFAULT_FILTER.step,
-  connect:'lower',
-});
-
-hideSlider();
 
 filtersContainerElement.addEventListener('change', onFiltersChange);
 sliderElement.noUiSlider.on('update', onSliderUpdate);

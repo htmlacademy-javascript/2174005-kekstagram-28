@@ -86,25 +86,22 @@ const showBigPicture = ({url, likes, description}) => {
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
-const onThumbnailClick = (evt) => {
-  const thumbnail = evt.target.closest('[data-thumbnail-id]');
-  if (!thumbnail) {
-    return;
-  }
-  evt.preventDefault();
-
-  const picture = data.find(
-    (item) => item.id === +(thumbnail.dataset.thumbnailId)
-  );
-
-  comments = Array.from(picture.comments);
-  renderComments(comments);
-  showBigPicture(picture);
-};
 
 const showPhotos = (data) => {
   renderPhotos(data);
-  thumbnailsElement.addEventListener('click', onThumbnailClick);
+  thumbnailsElement.addEventListener('click', (evt) => {
+    const thumbnail = evt.target.closest('[data-thumbnail-id]');
+    if (!thumbnail) {
+      return;
+    }
+    evt.preventDefault();
+    const picture = data.find(
+      (item) => item.id === +(thumbnail.dataset.thumbnailId)
+    );
+    comments = Array.from(picture.comments);
+    renderComments(comments);
+    showBigPicture(picture);
+  });
   imageFiltersElement.classList.remove('img-filters--inactive');
 };
 

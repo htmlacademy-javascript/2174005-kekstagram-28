@@ -15,6 +15,10 @@ const uploadCancelButton = uploadOverlay.querySelector('.img-upload__cancel');
 const hashtagFieldElement = document.querySelector('.text__hashtags');
 const commentFieldElement = document.querySelector('.text__description');
 const sendFormButton = document.querySelector('.img-upload__submit');
+const SendFormButtonText = {
+  STAND_BY: 'Опубликовать',
+  SENDING: 'Сохраняю'
+};
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -33,16 +37,16 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const onSendButtonDisable = () => pristine.validate()
-  ? sendFormButton.disabled
-  : sendFormButton.disabled = true;
+const checkSendButtonDisable = (disabled = false) => {
+  sendFormButton.disabled = disabled;
+  sendFormButton.textContent = disabled ? SendFormButtonText.SENDING : SendFormButtonText.STAND_BY;
+};
 
 const openModal = () => {
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   uploadCancelButton.addEventListener('click', onModalClose);
-  hashtagFieldElement.addEventListener('input', onSendButtonDisable);
 };
 
 function onModalClose () {
@@ -83,10 +87,12 @@ uploadForm.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
+    checkSendButtonDisable(true);
     sendData(new FormData(evt.target))
       .then(() => {
         showSuccessMessage();
-      });
+      })
+      .finally(checkSendButtonDisable);
   }
 });
 
