@@ -83,11 +83,10 @@ uploadForm.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    const formData = new FormData(evt.target);
-    sendData(formData)
-      .then(
-        showSuccessMessage()
-      );
+    sendData(new FormData(evt.target))
+      .then(() => {
+        showSuccessMessage();
+      });
   }
 });
 
