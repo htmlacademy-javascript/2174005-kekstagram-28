@@ -85,8 +85,8 @@ const updateSlider = () => {
     start: chosenFilter.max,
   });
 
-  const isReallyDefault = () => isDefault() ? hideSlider() : showSlider();
-  isReallyDefault();
+  const checkDefault = () => isDefault() ? hideSlider() : showSlider();
+  checkDefault();
 };
 
 const onFiltersChange = (evt) => {
