@@ -1,4 +1,4 @@
-import { renderBigPicture } from './full-size-picture.js';
+import { showPhotos } from './full-size-picture.js';
 import { debounce, shuffleArray } from './util.js';
 
 const RANDOM_IMAGE_COUNT = 10;
@@ -34,7 +34,7 @@ const onFilterButtonClick = (evt, photos) => {
   images.forEach((image) => {
     image.remove();
   });
-  renderBigPicture(getFilteredImages(photos));
+  showPhotos(getFilteredImages(photos));
 };
 
 const changeFilter = (photos) => {

@@ -7,58 +7,51 @@ const DEFAULT_FILTER = {
   unit: ''
 };
 
-const FILTERS = [
-  {
-    name: 'chrome',
+const Filter = {
+  chrome: {
     style: 'grayscale',
     min: 0,
     max: 1,
     step: 0.1,
     unit: ''
   },
-  {
-    name: 'sepia',
+  sepia: {
     style: 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
     unit: ''
   },
-  {
-    name: 'marvin',
+  marvin: {
     style: 'invert',
     min: 0,
     max: 100,
     step: 1,
     unit: '%'
   },
-  {
-    name: 'phobos',
+  phobos: {
     style: 'blur',
     min: 0,
     max: 3,
     step: 0.1,
     unit: 'px',
   },
-  {
-    name: 'heat',
+  heat: {
     style: 'brightness',
     min: 1,
     max: 3,
     step: 0.1,
     unit: ''
   }
-];
+};
 
 const imageElement = document.querySelector('.img-upload__preview img');
-const filtersContainer = document.querySelector('.effects__list');
+const filtersContainerElement = document.querySelector('.effects__list');
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderContainerElement = document.querySelector('.img-upload__effect-level');
-const filterLevel = document.querySelector('.effect-level__value');
+const filterElement = document.querySelector('.effect-level__value');
 
-let chosenFilter = DEFAULT_FILTER;
-
-const isDefault = () => chosenFilter === DEFAULT_FILTER;
+let chosenFilter = '';
 
 const hideSlider = () => {
   sliderContainerElement.classList.add('hidden');
@@ -66,45 +59,6 @@ const hideSlider = () => {
 
 const showSlider = () => {
   sliderContainerElement.classList.remove('hidden');
-};
-
-const updateSlider = () => {
-  sliderElement.noUiSlider.updateOptions({
-    range: {
-      min: chosenFilter.min,
-      max: chosenFilter.max,
-    },
-    step: chosenFilter.step,
-    start: chosenFilter.max,
-  });
-
-  if(isDefault()){
-    hideSlider();
-  } else {
-    showSlider();
-  }
-};
-
-const onFiltersChange = (evt) => {
-  if(!evt.target.classList.contains('effects__radio')) {
-    return;
-  }
-  chosenFilter = FILTERS.find((filter) => filter.name === evt.target.value);
-  imageElement.className = `effects__preview--${chosenFilter.name}`;
-  updateSlider();
-};
-
-const onSliderUpdate = () =>{
-  const sliderValue = sliderElement.noUiSlider.get();
-  imageElement.style.filter = isDefault()
-    ? DEFAULT_FILTER.style
-    : `${chosenFilter.style}(${sliderValue}${chosenFilter.unit})`;
-  filterLevel.value = sliderValue;
-};
-
-const resetFilters = () => {
-  chosenFilter = DEFAULT_FILTER;
-  updateSlider();
 };
 
 noUiSlider.create(sliderElement, {
@@ -119,7 +73,56 @@ noUiSlider.create(sliderElement, {
 
 hideSlider();
 
-filtersContainer.addEventListener('change', onFiltersChange);
+const updateSlider = (filter) => {
+  sliderElement.noUiSlider.updateOptions({
+    range: {
+      min: filter.min,
+      max: filter.max,
+    },
+    step: filter.step,
+    start: filter.max,
+    format: {
+      to: function (value) {
+        switch(filter.unit) {
+          case 'none':
+            return `${chosenFilter.style}(${value})`;
+          case filter.unit:
+            return `${chosenFilter.style}(${value}${filter.unit})`;
+        }
+      },
+      from: function (value) {
+        return value;
+      }
+    },
+  });
+};
+
+const onSliderUpdate = () => {
+  const sliderValue = sliderElement.noUiSlider.get();
+  imageElement.style.filter = sliderValue;
+  filterElement.value = +(sliderValue);
+};
+
+const onFiltersChange = (evt) => {
+  const currentFilterInput = evt.target.closest('input');
+  if(currentFilterInput.value === 'none') {
+    imageElement.className = '';
+    imageElement.style.filter = '';
+    hideSlider();
+  }
+  showSlider();
+  chosenFilter = Filter[currentFilterInput.value];
+  imageElement.className = `effects__preview--${currentFilterInput.value}`;
+  updateSlider(chosenFilter);
+};
+
+const resetFilters = () => {
+  imageElement.className = '';
+  imageElement.style.filter = '';
+  hideSlider();
+};
+
+filtersContainerElement.addEventListener('change', onFiltersChange);
 sliderElement.noUiSlider.on('update', onSliderUpdate);
 
 export {resetFilters};

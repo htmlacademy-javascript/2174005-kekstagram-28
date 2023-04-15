@@ -12,9 +12,13 @@ const uploadForm = document.querySelector('.img-upload__form');
 const uploadControl = uploadForm.querySelector('#upload-file');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const uploadCancelButton = uploadOverlay.querySelector('.img-upload__cancel');
-const hashtagField = document.querySelector('.text__hashtags');
-const commentField = document.querySelector('.text__description');
+const hashtagFieldElement = document.querySelector('.text__hashtags');
+const commentFieldElement = document.querySelector('.text__description');
 const sendFormButton = document.querySelector('.img-upload__submit');
+const SendFormButtonText = {
+  STAND_BY: 'Опубликовать',
+  SENDING: 'Сохраняю'
+};
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -23,34 +27,32 @@ const pristine = new Pristine(uploadForm, {
 });
 
 const isTextFieldFocused = () =>
-  document.activeElement === hashtagField ||
-  document.activeElement === commentField;
+  document.activeElement === hashtagFieldElement ||
+  document.activeElement === commentFieldElement;
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape' && !isTextFieldFocused()) {
     evt.preventDefault();
-    closeModal();
+    onModalClose();
   }
 };
 
-const disableSendButton = () => pristine.validate()
-  ? sendFormButton.removeAttribute('disabled')
-  : sendFormButton.setAttribute('disabled', true);
+const checkSendButtonDisable = (disabled = false) => {
+  sendFormButton.disabled = disabled;
+  sendFormButton.textContent = disabled ? SendFormButtonText.SENDING : SendFormButtonText.STAND_BY;
+};
 
 const openModal = () => {
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  uploadCancelButton.addEventListener('click', closeModal);
-  hashtagField.addEventListener('input', disableSendButton);
+  uploadCancelButton.addEventListener('click', onModalClose);
 };
 
-function closeModal () {
+function onModalClose () {
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadCancelButton.removeEventListener('click', closeModal);
-  hashtagField.removeEventListener('input', disableSendButton);
   uploadForm.reset();
   pristine.reset();
   resetZoom();
@@ -74,7 +76,7 @@ const validateTags = (value) => {
 };
 
 pristine.addValidator(
-  hashtagField,
+  hashtagFieldElement,
   validateTags,
   ERROR_TAGS_MESSAGE
 );
@@ -85,11 +87,12 @@ uploadForm.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    const formData = new FormData(evt.target);
-    sendData(formData)
-      .then(
-        showSuccessMessage()
-      );
+    checkSendButtonDisable(true);
+    sendData(new FormData(evt.target))
+      .then(() => {
+        showSuccessMessage();
+      })
+      .finally(checkSendButtonDisable);
   }
 });
 
@@ -97,4 +100,4 @@ uploadControl.addEventListener('change', () =>
   openModal()
 );
 
-export {onDocumentKeydown, closeModal};
+export {onDocumentKeydown, onModalClose};
