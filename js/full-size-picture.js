@@ -84,9 +84,7 @@ const showBigPicture = ({url, likes, description}) => {
   bigImageCaption.textContent = description;
 };
 
-
-const showPhotos = (data) => {
-  renderPhotos(data);
+const onThumbnailElementClick = (data) => {
   thumbnailsElement.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnail) {
@@ -96,12 +94,17 @@ const showPhotos = (data) => {
     const picture = data.find(
       (item) => item.id === +(thumbnail.dataset.thumbnailId)
     );
+    showBigPicture(picture);
+    openUserModal();
     comments = Array.from(picture.comments);
     renderComments(comments);
     commentsLoader.addEventListener('click', onCommentsLoaderClick);
-    openUserModal();
-    showBigPicture(picture);
   });
+};
+
+const showPhotos = (data) => {
+  renderPhotos(data);
+  onThumbnailElementClick(data);
   imageFiltersElement.classList.remove('img-filters--inactive');
 };
 

@@ -1,10 +1,7 @@
 const DEFAULT_FILTER = {
-  name: 'none',
-  style: 'none',
   min: 0,
   max: 100,
   step: 1,
-  unit: ''
 };
 
 const Filter = {
@@ -13,14 +10,14 @@ const Filter = {
     min: 0,
     max: 1,
     step: 0.1,
-    unit: ''
+    unit: 'none'
   },
   sepia: {
     style: 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
-    unit: ''
+    unit: 'none'
   },
   marvin: {
     style: 'invert',
@@ -41,7 +38,7 @@ const Filter = {
     min: 1,
     max: 3,
     step: 0.1,
-    unit: ''
+    unit: 'none'
   }
 };
 
@@ -51,7 +48,7 @@ const sliderElement = document.querySelector('.effect-level__slider');
 const sliderContainerElement = document.querySelector('.img-upload__effect-level');
 const filterElement = document.querySelector('.effect-level__value');
 
-let chosenFilter = '';
+let chosenElement = '';
 
 const hideSlider = () => {
   sliderContainerElement.classList.add('hidden');
@@ -85,9 +82,9 @@ const updateSlider = (filter) => {
       to: function (value) {
         switch(filter.unit) {
           case 'none':
-            return `${chosenFilter.style}(${value})`;
+            return `${chosenElement.style}(${value})`;
           case filter.unit:
-            return `${chosenFilter.style}(${value}${filter.unit})`;
+            return `${chosenElement.style}(${value}${filter.unit})`;
         }
       },
       from: function (value) {
@@ -109,11 +106,12 @@ const onFiltersChange = (evt) => {
     imageElement.className = '';
     imageElement.style.filter = '';
     hideSlider();
+  } else {
+    showSlider();
+    chosenElement = Filter[currentFilterInput.value];
+    imageElement.className = `effects__preview--${currentFilterInput.value}`;
+    updateSlider(chosenElement);
   }
-  showSlider();
-  chosenFilter = Filter[currentFilterInput.value];
-  imageElement.className = `effects__preview--${currentFilterInput.value}`;
-  updateSlider(chosenFilter);
 };
 
 const resetFilters = () => {

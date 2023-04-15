@@ -3,24 +3,24 @@ import {onModalClose, onDocumentKeydown} from './form.js';
 const ALERT_SHOW_TIME = 5000;
 
 const bodyElement = document.body;
-const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-const newSuccessMessage = successMessageTemplate.cloneNode(true);
-const successButton = newSuccessMessage.querySelector('.success__button');
+const successMessageTemplateElement = document.querySelector('#success').content.querySelector('.success');
+const newSuccessMessageElement = successMessageTemplateElement.cloneNode(true);
+const successButtonElement = newSuccessMessageElement.querySelector('.success__button');
 
-const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-const newErrorMessage = errorMessageTemplate.cloneNode(true);
-const errorButton = newErrorMessage.querySelector('.error__button');
+const errorMessageTemplateElement = document.querySelector('#error').content.querySelector('.error');
+const newErrorMessageElement = errorMessageTemplateElement.cloneNode(true);
+const errorButtonElement = newErrorMessageElement.querySelector('.error__button');
 
 const onSuccessButtonClose = () => {
-  document.querySelector('.success').classList.add('hidden');
+  newSuccessMessageElement.classList.add('hidden');
   onModalClose();
 };
 
 const showSuccessMessage = () => {
-  bodyElement.append(newSuccessMessage);
+  bodyElement.append(newSuccessMessageElement);
 
-  document.querySelector('.success').classList.remove('hidden');
-  successButton.addEventListener('click', onSuccessButtonClose);
+  newSuccessMessageElement.classList.remove('hidden');
+  successButtonElement.addEventListener('click', onSuccessButtonClose);
 };
 
 const onDocumentErrorKeydown = (evt) => {
@@ -36,18 +36,17 @@ const onDocumentClick = (evt) => {
 };
 
 function onErrorButtonClose () {
-  document.querySelector('.error').classList.add('hidden');
-  errorButton.removeEventListener('click', onErrorButtonClose);
+  newErrorMessageElement.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentErrorKeydown);
   document.removeEventListener('click', onDocumentClick);
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
 const showErrorMessage = () => {
-  bodyElement.append(newErrorMessage);
+  bodyElement.append(newErrorMessageElement); // если вынести в глобальную область видимости, то плашка с сообщением об ошибке появляется в центре
 
-  document.querySelector('.error').classList.remove('hidden');
-  errorButton.addEventListener('click', onErrorButtonClose);
+  newErrorMessageElement.classList.remove('hidden');
+  errorButtonElement.addEventListener('click', onErrorButtonClose);
   document.addEventListener('keydown', onDocumentErrorKeydown);
   document.addEventListener('click', onDocumentClick);
   document.removeEventListener('keydown', onDocumentKeydown);

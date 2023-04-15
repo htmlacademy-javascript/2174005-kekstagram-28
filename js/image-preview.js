@@ -1,14 +1,14 @@
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-const fileChooser = document.querySelector('.img-upload__input');
-const preview = document.querySelector('.img-upload__preview img');
+const fileChooserElement = document.querySelector('.img-upload__input');
+const previewElement = document.querySelector('.img-upload__preview img');
 
-fileChooser.addEventListener('change', () => {
-  const file = fileChooser.files[0];
+fileChooserElement.addEventListener('change', () => {
+  const file = fileChooserElement.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
-    preview.src = URL.createObjectURL(file);
+    previewElement.src = URL.createObjectURL(file);
   }
 });

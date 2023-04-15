@@ -8,19 +8,19 @@ const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TAGS_MESSAGE = 'Неправильно введены хештеги';
 
 const body = document.body;
-const uploadForm = document.querySelector('.img-upload__form');
-const uploadControl = uploadForm.querySelector('#upload-file');
-const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-const uploadCancelButton = uploadOverlay.querySelector('.img-upload__cancel');
+const uploadFormElement = document.querySelector('.img-upload__form');
+const uploadControlElement = uploadFormElement.querySelector('#upload-file');
+const uploadOverlayElement = uploadFormElement.querySelector('.img-upload__overlay');
+const uploadCancelButtonElement = uploadOverlayElement.querySelector('.img-upload__cancel');
 const hashtagFieldElement = document.querySelector('.text__hashtags');
 const commentFieldElement = document.querySelector('.text__description');
-const sendFormButton = document.querySelector('.img-upload__submit');
-const SendFormButtonText = {
+const sendFormButtonElement = document.querySelector('.img-upload__submit');
+const SendFormButtonTextElement = {
   STAND_BY: 'Опубликовать',
   SENDING: 'Сохраняю'
 };
 
-const pristine = new Pristine(uploadForm, {
+const pristine = new Pristine(uploadFormElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__error'
@@ -38,22 +38,22 @@ const onDocumentKeydown = (evt) => {
 };
 
 const checkSendButtonDisable = (disabled = false) => {
-  sendFormButton.disabled = disabled;
-  sendFormButton.textContent = disabled ? SendFormButtonText.SENDING : SendFormButtonText.STAND_BY;
+  sendFormButtonElement.disabled = disabled;
+  sendFormButtonElement.textContent = disabled ? SendFormButtonTextElement.SENDING : SendFormButtonTextElement.STAND_BY;
 };
 
 const openModal = () => {
-  uploadOverlay.classList.remove('hidden');
+  uploadOverlayElement.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  uploadCancelButton.addEventListener('click', onModalClose);
+  uploadCancelButtonElement.addEventListener('click', onModalClose);
 };
 
 function onModalClose () {
-  uploadOverlay.classList.add('hidden');
+  uploadOverlayElement.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadForm.reset();
+  uploadFormElement.reset();
   pristine.reset();
   resetZoom();
   resetFilters();
@@ -82,7 +82,7 @@ pristine.addValidator(
 );
 
 
-uploadForm.addEventListener('submit', (evt) => {
+uploadFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const isValid = pristine.validate();
@@ -96,7 +96,7 @@ uploadForm.addEventListener('submit', (evt) => {
   }
 });
 
-uploadControl.addEventListener('change', () =>
+uploadControlElement.addEventListener('change', () =>
   openModal()
 );
 
