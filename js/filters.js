@@ -51,9 +51,7 @@ const sliderElement = document.querySelector('.effect-level__slider');
 const sliderContainerElement = document.querySelector('.img-upload__effect-level');
 const filterElement = document.querySelector('.effect-level__value');
 
-let chosenFilter = DEFAULT_FILTER;
-
-const isDefault = () => chosenFilter === DEFAULT_FILTER;
+let chosenFilter = '';
 
 const hideSlider = () => {
   sliderContainerElement.classList.add('hidden');
@@ -75,41 +73,53 @@ noUiSlider.create(sliderElement, {
 
 hideSlider();
 
-const updateSlider = () => {
+const updateSlider = (filter) => {
   sliderElement.noUiSlider.updateOptions({
     range: {
-      min: chosenFilter.min,
-      max: chosenFilter.max,
+      min: filter.min,
+      max: filter.max,
     },
-    step: chosenFilter.step,
-    start: chosenFilter.max,
+    step: filter.step,
+    start: filter.max,
+    format: {
+      to: function (value) {
+        switch(filter.unit) {
+          case 'none':
+            return `${chosenFilter.style}(${value})`;
+          case filter.unit:
+            return `${chosenFilter.style}(${value}${filter.unit})`;
+        }
+      },
+      from: function (value) {
+        return value;
+      }
+    },
   });
-
-  const checkDefault = () => isDefault() ? hideSlider() : showSlider();
-  checkDefault();
-};
-
-const onFiltersChange = (evt) => {
-  const currentFilterInput = evt.target.classList.contains('effects__radio');
-  if(!currentFilterInput) {
-    return;
-  }
-  chosenFilter = Filter[currentFilterInput.value];
-  imageElement.className = `effects__preview--${currentFilterInput.value}`;
-  updateSlider();
 };
 
 const onSliderUpdate = () => {
   const sliderValue = sliderElement.noUiSlider.get();
-  imageElement.style.filter = isDefault()
-    ? DEFAULT_FILTER.style
-    : `${chosenFilter.style}(${sliderValue}${chosenFilter.unit})`;
-  filterElement.value = sliderValue;
+  imageElement.style.filter = sliderValue;
+  filterElement.value = +(sliderValue);
+};
+
+const onFiltersChange = (evt) => {
+  const currentFilterInput = evt.target.closest('input');
+  if(currentFilterInput.value === 'none') {
+    imageElement.className = '';
+    imageElement.style.filter = '';
+    hideSlider();
+  }
+  showSlider();
+  chosenFilter = Filter[currentFilterInput.value];
+  imageElement.className = `effects__preview--${currentFilterInput.value}`;
+  updateSlider(chosenFilter);
 };
 
 const resetFilters = () => {
-  chosenFilter = DEFAULT_FILTER;
-  updateSlider();
+  imageElement.className = '';
+  imageElement.style.filter = '';
+  hideSlider();
 };
 
 filtersContainerElement.addEventListener('change', onFiltersChange);
