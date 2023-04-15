@@ -1,6 +1,6 @@
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const shuffleArray = (array) => {
+const shuffleArray = (array) => { // алгоритм под названием Тасование Фишера — Йетса
   let j, temp;
   for (let i = array.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
