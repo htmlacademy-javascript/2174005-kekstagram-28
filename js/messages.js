@@ -3,19 +3,13 @@ import {onModalClose, onDocumentKeydown} from './form.js';
 const ALERT_SHOW_TIME = 5000;
 
 const bodyElement = document.body;
-const successMessageTemplate = document.querySelector('#success').content;
+const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 const newSuccessMessage = successMessageTemplate.cloneNode(true);
 const successButton = newSuccessMessage.querySelector('.success__button');
 
-const errorMessageTemplate = document.querySelector('#error').content;
+const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 const newErrorMessage = errorMessageTemplate.cloneNode(true);
 const errorButton = newErrorMessage.querySelector('.error__button');
-
-const createMessages = () => {
-  bodyElement.append(newSuccessMessage, newErrorMessage);
-  document.querySelector('.success').classList.add('hidden');
-  document.querySelector('.error').classList.add('hidden');
-};
 
 const onSuccessButtonClose = () => {
   document.querySelector('.success').classList.add('hidden');
@@ -23,6 +17,8 @@ const onSuccessButtonClose = () => {
 };
 
 const showSuccessMessage = () => {
+  bodyElement.append(newSuccessMessage);
+
   document.querySelector('.success').classList.remove('hidden');
   successButton.addEventListener('click', onSuccessButtonClose);
 };
@@ -48,6 +44,8 @@ function onErrorButtonClose () {
 }
 
 const showErrorMessage = () => {
+  bodyElement.append(newErrorMessage);
+
   document.querySelector('.error').classList.remove('hidden');
   errorButton.addEventListener('click', onErrorButtonClose);
   document.addEventListener('keydown', onDocumentErrorKeydown);
@@ -75,7 +73,5 @@ const showAlert = (message) => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
 };
-
-createMessages();
 
 export {showSuccessMessage, showErrorMessage, showAlert};

@@ -79,11 +79,9 @@ function onCommentsLoaderClick () {
 }
 
 const showBigPicture = ({url, likes, description}) => {
-  openUserModal();
   bigImage.src = url;
   bigImageLikesCount.textContent = likes;
   bigImageCaption.textContent = description;
-  commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
 
@@ -100,6 +98,8 @@ const showPhotos = (data) => {
     );
     comments = Array.from(picture.comments);
     renderComments(comments);
+    commentsLoader.addEventListener('click', onCommentsLoaderClick);
+    openUserModal();
     showBigPicture(picture);
   });
   imageFiltersElement.classList.remove('img-filters--inactive');
